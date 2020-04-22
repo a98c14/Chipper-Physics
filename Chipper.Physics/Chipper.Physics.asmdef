@@ -1,0 +1,15 @@
+{
+  "name": "Chipper.Physics",
+  "references": [    
+    "Chipper.Transforms",
+    "Unity.Collections",
+    "Unity.Burst",
+    "Unity.Mathematics",
+    "Unity.Jobs",
+    "Unity.Entities"
+  ],
+  "optionalUnityReferences": [],
+  "includePlatforms": [],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false
+}

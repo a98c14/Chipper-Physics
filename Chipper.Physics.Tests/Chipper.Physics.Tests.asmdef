@@ -1,0 +1,19 @@
+{
+    "name": "Chipper.Physics.Tests",
+    "references": [
+        "Chipper.Physics",
+        "Unity.Collections",
+        "Unity.Burst",
+        "Unity.Mathematics",
+        "Unity.Jobs",
+        "Unity.Entities"
+    ],
+    "optionalUnityReferences": [
+        "TestAssemblies"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+	"allowUnsafeCode": false
+}

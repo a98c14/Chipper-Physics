@@ -1,0 +1,20 @@
+{
+  "name": "Chipper.Physics.Editor",
+  "references": [
+    "Chipper.Physics",
+    "Chipper.Physics.Hybrid",
+    "Chipper.Editor",
+    "Chipper.Transforms",
+    "Unity.Collections",
+    "Unity.Burst",
+    "Unity.Mathematics",
+    "Unity.Entities",
+    "Unity.Entities.Hybrid"
+  ],
+  "optionalUnityReferences": [],
+  "includePlatforms": [
+      "Editor"
+  ],
+  "excludePlatforms": [],
+	"allowUnsafeCode": false
+}

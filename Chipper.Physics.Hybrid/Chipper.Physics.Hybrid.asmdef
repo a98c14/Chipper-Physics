@@ -1,0 +1,16 @@
+{
+  "name": "Chipper.Physics.Hybrid",
+  "references": [
+    "Chipper.Physics",
+    "Unity.Collections",
+    "Unity.Burst",
+    "Unity.Mathematics",
+    "Unity.Jobs",
+    "Unity.Entities",
+    "Unity.Entities.Hybrid"
+  ],
+    "optionalUnityReferences": [],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false
+}

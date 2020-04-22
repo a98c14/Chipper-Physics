@@ -1,0 +1,29 @@
+{
+  "name": "com.chipper.physics",
+  "version": "0.0.1-preview",
+  "displayName": "Chipper Physics",
+  "description": "2D Physics for ECS",
+  "unity": "2019.2",
+  "unityRelease": "4f1",
+  "dependencies": {
+    "com.chipper.core": "0.0.1-preview",
+    "com.unity.entities": "0.5.0-preview",
+    "com.unity.properties": "0.10.3-preview",
+    "com.unity.mathematics": "1.1.0",
+    "com.unity.test-framework.performance": "1.3.0-preview",
+    "com.unity.burst": "1.2.0-preview",
+    "com.unity.jobs": "0.2.3-preview",
+    "com.unity.collections": "0.2.0-preview",
+    "nuget.mono-cecil": "0.1.6-preview"
+  },
+  "keywords": [
+    "2D",
+    "physics",
+    "chipper",
+    "ecs"
+  ],
+  "author": {
+    "name": "Selim Yesilkaya"
+  }
+}
+  
