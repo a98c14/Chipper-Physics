@@ -32,6 +32,7 @@ namespace Chipper.Physics.Editor
 
         public void OnEnable()
         {
+            EditorUtility.SetDirty(target);
             var collider = (ColliderAuthoring)target;
             if (collider.Vertices == null)
                 collider.Vertices = new List<Vector2>();
