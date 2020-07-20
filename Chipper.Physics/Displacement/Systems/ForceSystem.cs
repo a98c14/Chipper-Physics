@@ -6,17 +6,17 @@ namespace Chipper.Physics
 {
     [UpdateAfter(typeof(CollisionResolutionSystem))]
     [UpdateInGroup(typeof(PhysicsSystemGroup))]
-    public class ForceSystem : JobComponentSystem
+    public class ForceSystem : SystemBase
     {
-        protected override JobHandle OnUpdate(JobHandle inputDeps) 
+        protected override void OnUpdate() 
         {
-            return Entities.WithName("ForceSystem")
+            Entities.WithName("ForceSystem")
             .ForEach((ref Force force, ref Acceleration accel, in Mass mass) =>
             {
                 accel.Value += force.Value / mass.Value;
                 force.Value = 0;
             })
-            .Schedule(inputDeps);
+            .Schedule();
         }
     }
 }

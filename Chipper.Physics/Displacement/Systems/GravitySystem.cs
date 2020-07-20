@@ -2,28 +2,29 @@
 using Unity.Jobs;
 using Unity.Mathematics;
 using Unity.Collections;
+using Chipper.Transforms;
 
 namespace Chipper.Physics
 {
     [UpdateAfter(typeof(ForceSystem))]
     [UpdateInGroup(typeof(PhysicsSystemGroup))]
-    public class GravitySystem : JobComponentSystem
+    public class GravitySystem : SystemBase
     {
-        protected override JobHandle OnUpdate(JobHandle inputDeps)
+        protected override void OnUpdate()
         {
             var settings = HasSingleton<PhysicsSettings>() ? GetSingleton<PhysicsSettings>() : PhysicsSettings.Default;
-            inputDeps = Entities
+            Entities
             .WithName("GravitySystem")
             .WithAll<AffectedByGravity>()
-            .ForEach((ref Acceleration acceleration, in Mass mass) =>
+            .ForEach((ref Force force, in Mass mass, in Position2D pos) =>
             {
                 if (mass.IsDisabled)
                     return;
 
-                acceleration.Value += new float3(0, 0, -1) * settings.Gravity / mass.Value;
-            }).Schedule(inputDeps);
-
-            return inputDeps;
+                var z = pos.Value.z;
+                if (z > 0)
+                    force.Value += new float3(0, 0, -1) * settings.Gravity * mass.Value;
+            }).Schedule();
         }
     }
 }
