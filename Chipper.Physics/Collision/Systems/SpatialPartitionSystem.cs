@@ -45,11 +45,11 @@ namespace Chipper.Physics
             {
                 inputDeps = new PartitionJob
                 {
-                    EntityType        = GetArchetypeChunkEntityType(),
-                    BoundsType        = GetArchetypeChunkComponentType<Bounds2D>(true),
-                    ShapeType         = GetArchetypeChunkComponentType<ColliderShape>(true),
-                    LargeColliderType = GetArchetypeChunkComponentType<LargeCollider>(true),
-                    TagType           = GetArchetypeChunkComponentType<ColliderTag>(true),
+                    EntityType        = GetEntityTypeHandle(),
+                    BoundsType        = GetComponentTypeHandle<Bounds2D>(true),
+                    ShapeType         = GetComponentTypeHandle<ColliderShape>(true),
+                    LargeColliderType = GetComponentTypeHandle<LargeCollider>(true),
+                    TagType           = GetComponentTypeHandle<ColliderTag>(true),
                     ColliderTargetMap = TargetMap.AsParallelWriter(),
                     ColliderSourceMap = ColliderMap.AsParallelWriter(),
                     LargeColliders    = LargeColliders.AsParallelWriter(),                

@@ -12,10 +12,10 @@ namespace Chipper.Physics
         [BurstCompile]
         struct BoundsJob : IJobChunk
         {
-            [ReadOnly] public ArchetypeChunkComponentType<CircleCollider> CircleColliderType;
-            [ReadOnly] public ArchetypeChunkBufferType<ColliderVertex> VertexType;
+            [ReadOnly] public ComponentTypeHandle<CircleCollider> CircleColliderType;
+            [ReadOnly] public BufferTypeHandle<ColliderVertex> VertexType;
 
-            public ArchetypeChunkComponentType<Bounds2D> BoundsType;
+            public ComponentTypeHandle<Bounds2D> BoundsType;
 
             public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
             {
@@ -43,9 +43,9 @@ namespace Chipper.Physics
         {
             return new BoundsJob
             {
-                CircleColliderType = GetArchetypeChunkComponentType<CircleCollider>(true),
-                VertexType = GetArchetypeChunkBufferType<ColliderVertex>(true),
-                BoundsType = GetArchetypeChunkComponentType<Bounds2D>(false),
+                CircleColliderType = GetComponentTypeHandle<CircleCollider>(true),
+                VertexType = GetBufferTypeHandle<ColliderVertex>(true),
+                BoundsType = GetComponentTypeHandle<Bounds2D>(false),
             }.Schedule(m_Query, inputDeps);
         }
 

@@ -8,11 +8,11 @@ namespace Chipper.Physics
     [BurstCompile]
     struct PartitionJob : IJobChunk
     {
-        [ReadOnly] public ArchetypeChunkEntityType EntityType;
-        [ReadOnly] public ArchetypeChunkComponentType<Bounds2D> BoundsType;
-        [ReadOnly] public ArchetypeChunkComponentType<ColliderShape> ShapeType;
-        [ReadOnly] public ArchetypeChunkComponentType<ColliderTag> TagType;
-        [ReadOnly] public ArchetypeChunkComponentType<LargeCollider> LargeColliderType;
+        [ReadOnly] public EntityTypeHandle EntityType;
+        [ReadOnly] public ComponentTypeHandle<Bounds2D> BoundsType;
+        [ReadOnly] public ComponentTypeHandle<ColliderShape> ShapeType;
+        [ReadOnly] public ComponentTypeHandle<ColliderTag> TagType;
+        [ReadOnly] public ComponentTypeHandle<LargeCollider> LargeColliderType;
 
         // Every collider in Source map checks collisions against Target map
         [WriteOnly] public NativeMultiHashMap<int, ColliderData>.ParallelWriter ColliderSourceMap;

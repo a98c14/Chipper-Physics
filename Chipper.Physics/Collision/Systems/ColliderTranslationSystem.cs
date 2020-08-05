@@ -23,14 +23,14 @@ namespace Chipper.Physics
         struct TranslationJob : IJobChunk
         {
             [ReadOnly] public uint LastSystemVersion;
-            [ReadOnly] public ArchetypeChunkComponentType<Pivot> PivotType;
-            [ReadOnly] public ArchetypeChunkComponentType<PolygonColliderInfo> PolygonInfoType;
-            [ReadOnly] public ArchetypeChunkComponentType<CurvedColliderInfo> CurvedInfoType;
-            [ReadOnly] public ArchetypeChunkComponentType<Rotation2D> RotationType;
+            [ReadOnly] public ComponentTypeHandle<Pivot> PivotType;
+            [ReadOnly] public ComponentTypeHandle<PolygonColliderInfo> PolygonInfoType;
+            [ReadOnly] public ComponentTypeHandle<CurvedColliderInfo> CurvedInfoType;
+            [ReadOnly] public ComponentTypeHandle<Rotation2D> RotationType;
 
-            public ArchetypeChunkBufferType<ColliderVertex> VertexType;
-            public ArchetypeChunkBufferType<EdgeNormal> NormalType;
-            public ArchetypeChunkComponentType<CircleCollider> CircleType;
+            public BufferTypeHandle<ColliderVertex> VertexType;
+            public BufferTypeHandle<EdgeNormal> NormalType;
+            public ComponentTypeHandle<CircleCollider> CircleType;
 
             public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
             {
@@ -115,13 +115,13 @@ namespace Chipper.Physics
             return new TranslationJob
             {
                 LastSystemVersion = LastSystemVersion,
-                VertexType = GetArchetypeChunkBufferType<ColliderVertex>(false),
-                NormalType = GetArchetypeChunkBufferType<EdgeNormal>(false),
-                CircleType = GetArchetypeChunkComponentType<CircleCollider>(false),
-                PivotType = GetArchetypeChunkComponentType<Pivot>(true),
-                PolygonInfoType = GetArchetypeChunkComponentType<PolygonColliderInfo>(true),
-                CurvedInfoType = GetArchetypeChunkComponentType<CurvedColliderInfo>(true),
-                RotationType = GetArchetypeChunkComponentType<Rotation2D>(true),
+                VertexType = GetBufferTypeHandle<ColliderVertex>(false),
+                NormalType = GetBufferTypeHandle<EdgeNormal>(false),
+                CircleType = GetComponentTypeHandle<CircleCollider>(false),
+                PivotType = GetComponentTypeHandle<Pivot>(true),
+                PolygonInfoType = GetComponentTypeHandle<PolygonColliderInfo>(true),
+                CurvedInfoType = GetComponentTypeHandle<CurvedColliderInfo>(true),
+                RotationType = GetComponentTypeHandle<Rotation2D>(true),
             }.Schedule(m_ColliderGroup, pivotJob);
         }
 

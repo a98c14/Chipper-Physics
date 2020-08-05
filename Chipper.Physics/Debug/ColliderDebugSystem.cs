@@ -203,13 +203,13 @@ namespace Chipper.Physics
                 m_Drawer = CreateDrawer();
 
             var chunks             = m_ColliderGroup.CreateArchetypeChunkArray(Allocator.TempJob);
-            var boundsType         = GetArchetypeChunkComponentType<Bounds2D>(true);
-            var circleType         = GetArchetypeChunkComponentType<CircleCollider>(true);
-            var positionType       = GetArchetypeChunkComponentType<Position2D>(true);
-            var velocityType       = GetArchetypeChunkComponentType<Velocity>(true);
-            var accelerationType   = GetArchetypeChunkComponentType<Acceleration>(true);
-            var colliderVertexType = GetArchetypeChunkBufferType<ColliderVertex>(true);
-            var colliderNormalType = GetArchetypeChunkBufferType<EdgeNormal>(true);
+            var boundsType         = GetComponentTypeHandle<Bounds2D>(true);
+            var circleType         = GetComponentTypeHandle<CircleCollider>(true);
+            var positionType       = GetComponentTypeHandle<Position2D>(true);
+            var velocityType       = GetComponentTypeHandle<Velocity>(true);
+            var accelerationType   = GetComponentTypeHandle<Acceleration>(true);
+            var colliderVertexType = GetBufferTypeHandle<ColliderVertex>(true);
+            var colliderNormalType = GetBufferTypeHandle<EdgeNormal>(true);
 
             for (int i = 0; i < chunks.Length; i++)
             {

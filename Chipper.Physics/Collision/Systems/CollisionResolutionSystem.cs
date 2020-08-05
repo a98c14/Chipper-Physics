@@ -14,12 +14,12 @@ namespace Chipper.Physics
         [BurstCompile]
         struct TranslationJob : IJobChunk
         {
-            [ReadOnly] public ArchetypeChunkComponentType<MoveOutOfCollision> MoveOutOfCollisionType;
-            [ReadOnly] public ArchetypeChunkComponentType<ForceOutOfCollision> ForceOutOfCollisionType;
-            [ReadOnly] public ArchetypeChunkBufferType<CollisionBuffer> CollisionBufferType;
+            [ReadOnly] public ComponentTypeHandle<MoveOutOfCollision> MoveOutOfCollisionType;
+            [ReadOnly] public ComponentTypeHandle<ForceOutOfCollision> ForceOutOfCollisionType;
+            [ReadOnly] public BufferTypeHandle<CollisionBuffer> CollisionBufferType;
 
-            public ArchetypeChunkComponentType<Force> ForceType;
-            public ArchetypeChunkComponentType<Position2D> PositionType;
+            public ComponentTypeHandle<Force> ForceType;
+            public ComponentTypeHandle<Position2D> PositionType;
 
             public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
             {
@@ -91,11 +91,11 @@ namespace Chipper.Physics
         {
             return new TranslationJob
             {                                
-                CollisionBufferType = GetArchetypeChunkBufferType<CollisionBuffer>(true),
-                ForceOutOfCollisionType = GetArchetypeChunkComponentType<ForceOutOfCollision>(true),
-                MoveOutOfCollisionType = GetArchetypeChunkComponentType<MoveOutOfCollision>(true),
-                PositionType = GetArchetypeChunkComponentType<Position2D>(false),
-                ForceType = GetArchetypeChunkComponentType<Force>(false),
+                CollisionBufferType = GetBufferTypeHandle<CollisionBuffer>(true),
+                ForceOutOfCollisionType = GetComponentTypeHandle<ForceOutOfCollision>(true),
+                MoveOutOfCollisionType = GetComponentTypeHandle<MoveOutOfCollision>(true),
+                PositionType = GetComponentTypeHandle<Position2D>(false),
+                ForceType = GetComponentTypeHandle<Force>(false),
             }.Schedule(m_Query, inputDeps);
         }
 
