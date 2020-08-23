@@ -7,8 +7,10 @@ namespace Chipper.Physics
     {
         public ColliderShapeType SourceType;
         public ColliderShapeType TargetType;
-        public Entity Source;
-        public Entity Target;
+        public Entity SourceEntity;
+        public Entity TargetEntity;
+        public Entity SourceCollider;
+        public Entity TargetCollider;
         public float2 SourceCenter;
         public float2 TargetCenter;
 
@@ -18,8 +20,8 @@ namespace Chipper.Physics
             {
                 var packer = new PhysicsUtil.IntPacker
                 {
-                    LowInt = Source.Index,
-                    HighInt = Target.Index
+                    LowInt  = SourceCollider.Index,
+                    HighInt = TargetCollider.Index
                 };
                 return packer.LongValue;
             }

@@ -15,13 +15,15 @@ namespace Chipper.Physics
             while (hasValue)
             {
                 // TODO: We need to check collider heights aswell
-                if (CanCollide(source.Tags, target.Tags) && source.Entity != target.Entity && Bounds2D.DoesCollide(source.Bounds, target.Bounds)) 
+                if (CanCollide(source.Tags, target.Tags) && source.ColliderEntity != target.ColliderEntity && Bounds2D.DoesCollide(source.Bounds, target.Bounds)) 
                 {
                     PossibleCollisions.Add(key, new PossibleCollision
                     {
-                        Source = source.Entity,
+                        SourceEntity = source.Entity,
+                        SourceCollider = source.ColliderEntity,
                         SourceType = source.Shape,
-                        Target = target.Entity,
+                        TargetEntity = target.Entity,
+                        TargetCollider = target.ColliderEntity,
                         TargetType = target.Shape,
                         SourceCenter = source.Bounds.Center,
                         TargetCenter = target.Bounds.Center,

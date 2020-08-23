@@ -3,11 +3,13 @@ using Unity.Collections;
 using Unity.Entities;
 using Unity.Jobs;
 using Chipper.Physics;
+using Chipper.Transforms;
 using Unity.Mathematics;
 
 public struct ColliderData
 {
     public Entity Entity;
+    public Entity ColliderEntity;
     public Bounds2D Bounds;
     public ColliderShapeType Shape;
     public ColliderTagType Tags;
@@ -49,6 +51,7 @@ namespace Chipper.Physics
                     BoundsType        = GetComponentTypeHandle<Bounds2D>(true),
                     ShapeType         = GetComponentTypeHandle<ColliderShape>(true),
                     LargeColliderType = GetComponentTypeHandle<LargeCollider>(true),
+                    ParentType        = GetComponentTypeHandle<Parent2D>(true),
                     TagType           = GetComponentTypeHandle<ColliderTag>(true),
                     ColliderTargetMap = TargetMap.AsParallelWriter(),
                     ColliderSourceMap = ColliderMap.AsParallelWriter(),

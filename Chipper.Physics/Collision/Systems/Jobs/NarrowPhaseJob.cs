@@ -25,7 +25,7 @@ namespace Chipper.Physics
         public void ExecuteNext(int key, PossibleCollision p)
         {
             if(DoesCollide(p, out var mtv))
-                ApplyCollision(p.CollisionID, p.Source, p.Target, mtv);
+                ApplyCollision(p.CollisionID, p.SourceEntity, p.TargetEntity, mtv);
         }
 
         bool DoesCollide(PossibleCollision p, out MTV mtv)
@@ -34,30 +34,30 @@ namespace Chipper.Physics
             mtv = MTV.Max;
             if (p.SourceType == ColliderShapeType.Circle && p.TargetType == ColliderShapeType.Circle)
             {
-                var c0 = CircleColliderFromEntity[p.Source];
-                var c1 = CircleColliderFromEntity[p.Target];
+                var c0 = CircleColliderFromEntity[p.SourceCollider];
+                var c1 = CircleColliderFromEntity[p.TargetCollider];
                 doesCollide = CollisionUtils.IsColliding(c0, c1, out mtv);
             }
             else if (p.SourceType == ColliderShapeType.Polygon && p.TargetType == ColliderShapeType.Circle)
             {
-                var v = ColliderVertexFromEntity[p.Source].AsNativeArray();
-                var n = ColliderNormalFromEntity[p.Source].AsNativeArray();
-                var c = CircleColliderFromEntity[p.Target];
+                var v = ColliderVertexFromEntity[p.SourceCollider].AsNativeArray();
+                var n = ColliderNormalFromEntity[p.SourceCollider].AsNativeArray();
+                var c = CircleColliderFromEntity[p.TargetCollider];
                 doesCollide = CollisionUtils.IsColliding(c, v, n, p.SourceCenter, out mtv);
             }
             else if (p.SourceType == ColliderShapeType.Circle && p.TargetType == ColliderShapeType.Polygon)
             {
-                var c = CircleColliderFromEntity[p.Source];
-                var v = ColliderVertexFromEntity[p.Target].AsNativeArray();
-                var n = ColliderNormalFromEntity[p.Target].AsNativeArray();
+                var c = CircleColliderFromEntity[p.SourceCollider];
+                var v = ColliderVertexFromEntity[p.TargetCollider].AsNativeArray();
+                var n = ColliderNormalFromEntity[p.TargetCollider].AsNativeArray();
                 doesCollide = CollisionUtils.IsColliding(c, v, n, p.TargetCenter, out mtv);
             }
             else if (p.SourceType == ColliderShapeType.Polygon && p.TargetType == ColliderShapeType.Polygon)
             {
-                var v0 = ColliderVertexFromEntity[p.Source].AsNativeArray();
-                var n0 = ColliderNormalFromEntity[p.Source].AsNativeArray();
-                var v1 = ColliderVertexFromEntity[p.Target].AsNativeArray();
-                var n1 = ColliderNormalFromEntity[p.Target].AsNativeArray();
+                var v0 = ColliderVertexFromEntity[p.SourceCollider].AsNativeArray();
+                var n0 = ColliderNormalFromEntity[p.SourceCollider].AsNativeArray();
+                var v1 = ColliderVertexFromEntity[p.TargetCollider].AsNativeArray();
+                var n1 = ColliderNormalFromEntity[p.TargetCollider].AsNativeArray();
                 doesCollide = CollisionUtils.IsColliding(v0, v1, n0, n1, p.SourceCenter, p.TargetCenter, out mtv);
             }
 

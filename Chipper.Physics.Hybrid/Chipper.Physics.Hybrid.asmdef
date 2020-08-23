@@ -1,16 +1,22 @@
 {
-  "name": "Chipper.Physics.Hybrid",
-  "references": [
-    "Chipper.Physics",
-    "Unity.Collections",
-    "Unity.Burst",
-    "Unity.Mathematics",
-    "Unity.Jobs",
-    "Unity.Entities",
-    "Unity.Entities.Hybrid"
-  ],
-    "optionalUnityReferences": [],
+    "name": "Chipper.Physics.Hybrid",
+    "references": [
+        "Chipper.Physics",
+        "Chipper.Transforms",
+        "Unity.Collections",
+        "Unity.Burst",
+        "Unity.Mathematics",
+        "Unity.Jobs",
+        "Unity.Entities",
+        "Unity.Entities.Hybrid"
+    ],
     "includePlatforms": [],
     "excludePlatforms": [],
-    "allowUnsafeCode": false
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
 }

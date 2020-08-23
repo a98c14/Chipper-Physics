@@ -1,5 +1,4 @@
-﻿#if UNITY_EDITOR
-using Unity.Entities;
+﻿using Unity.Entities;
 using Unity.Collections;
 using UnityEditor;
 using UnityEngine;
@@ -312,4 +311,3 @@ namespace Chipper.Physics
         }
     }
 }
-#endif
