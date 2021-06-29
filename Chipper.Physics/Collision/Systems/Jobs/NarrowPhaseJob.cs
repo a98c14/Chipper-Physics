@@ -1,6 +1,4 @@
 ﻿using Unity.Entities;
-using Unity.Jobs;
-using Unity.Mathematics;
 using Unity.Burst;
 using Unity.Collections;
 using Chipper.Transforms;
@@ -25,7 +23,7 @@ namespace Chipper.Physics
         public void ExecuteNext(int key, PossibleCollision p)
         {
             if(DoesCollide(p, out var mtv))
-                ApplyCollision(p.CollisionID, p.SourceEntity, p.TargetEntity, mtv);
+                ApplyCollision(p.CollisionID, p.SourceCollider, p.TargetCollider, p.TargetEntity, mtv);
         }
 
         bool DoesCollide(PossibleCollision p, out MTV mtv)
@@ -64,14 +62,14 @@ namespace Chipper.Physics
             return doesCollide;
         }
 
-        void ApplyCollision(long id, Entity source, Entity target, MTV mtv)
+        void ApplyCollision(long id, Entity sourceCollider, Entity targetCollider, Entity targetEntity, MTV mtv)
         {
-            var collisionBuffer = CollisionBufferFromEntity[source];
-            var sourcePos = Positions[source].Value;
-            var targetPos = Positions[target].Value;
+            var collisionBuffer = CollisionBufferFromEntity[sourceCollider];
+            var sourcePos = Positions[sourceCollider].Value;
+            var targetPos = Positions[targetCollider].Value;
             collisionBuffer.Add(new CollisionBuffer
             {
-                Entity = target,
+                Entity = targetEntity,
                 IsNew = !DoesExistInPreviousFrame(id),
                 Point = (sourcePos + targetPos / 2),
                 Normal = mtv.Direction,

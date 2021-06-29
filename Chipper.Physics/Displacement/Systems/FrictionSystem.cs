@@ -17,9 +17,10 @@ namespace Chipper.Physics
             inputDeps = Entities.WithName("FrictionSystem")
             .ForEach((ref Force force, ref Velocity velocity, ref Acceleration acceleration, in Mass mass) =>
             {
-                // force.Value += mass.Value * settings.Gravity * settings.FrictionCoefficient * math.normalizesafe(velocity.Value) * -1 * dt;
-                acceleration.Value = math.lerp(acceleration.Value, 0, dt * 4f);
-                velocity.Value = math.lerp(velocity.Value, 0, dt * 1f);
+                //var frictionDirection = math.normalizesafe(velocity.Value) * -1;
+                //force.Value += mass.Value * settings.Gravity * settings.FrictionCoefficient * dt * frictionDirection;
+                acceleration.Value = math.lerp(acceleration.Value, 0, dt * 16f);
+                velocity.Value = math.lerp(velocity.Value, 0, dt * 6f);
             })
             .Schedule(inputDeps);
 
