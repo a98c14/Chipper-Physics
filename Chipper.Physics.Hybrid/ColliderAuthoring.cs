@@ -30,7 +30,7 @@ namespace Chipper.Physics
             dstManager.AddComponentData(entity, new PivotOffset(PivotOffset));
             dstManager.AddComponentData(entity, new Bounds2D());
             dstManager.AddComponentData(entity, new ColliderShape { Value = Shape });
-            dstManager.AddComponentData(entity, new ColliderTag { Self = CollidesWith, Target = ColliderTags});
+            dstManager.AddComponentData(entity, new ColliderTag { Self = ColliderTags, Target = CollidesWith});
 
             if (IsBiggerThanCellSize)
                 dstManager.AddComponentData(entity, new LargeCollider());
