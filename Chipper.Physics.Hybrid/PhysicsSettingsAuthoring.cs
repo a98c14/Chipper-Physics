@@ -3,7 +3,7 @@ using Unity.Entities;
 
 namespace Chipper.Physics
 {
-    [RequiresEntityConversion, DisallowMultipleComponent]
+    [DisallowMultipleComponent]
     [AddComponentMenu("Chipper/Physics/Physics Settings")]
     public class PhysicsSettingsAuthoring : MonoBehaviour, IConvertGameObjectToEntity
     {

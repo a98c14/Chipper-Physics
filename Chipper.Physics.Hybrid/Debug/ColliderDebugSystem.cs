@@ -15,6 +15,8 @@ namespace Chipper.Physics
         public bool DrawNormals;
         public bool DrawInfoLabels;
         public bool DrawGrid;
+        public float2 LabelOffset;
+        public float  LabelGap;
     }
 
     class PhysicsDebugDrawer : MonoBehaviour
@@ -252,9 +254,12 @@ namespace Chipper.Physics
                         var pos = positions[j].Value.xy;
                         var a   = accelerations[j].Value.xy;
                         var v   = velocities[j].Value.xy;
+                        var x   = pos.x + settings.LabelOffset.x;
+                        var y   = pos.y + settings.LabelOffset.y;
 
-                        m_Drawer.Add(new float3(pos.x, pos.y + 10, 0), $"Vel.  : {math.length(v).ToString("0.##")}", m_LabelColor);
-                        m_Drawer.Add(new float3(pos.x, pos.y + 13, 0), $"Accel.: {math.length(a).ToString("0.##")}", m_LabelColor);
+
+                        m_Drawer.Add(new float3(x, y, 0), $"Vel.  : {math.length(v):0.##}", m_LabelColor);
+                        m_Drawer.Add(new float3(x, y + settings.LabelGap, 0), $"Accel.: {math.length(a):0.##}", m_LabelColor);
                         m_Drawer.Add(pos, pos + v, m_VelocityColor);
                         m_Drawer.Add(pos, pos + a, m_AccelerationColor);
                     }

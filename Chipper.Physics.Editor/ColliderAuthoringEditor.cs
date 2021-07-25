@@ -120,6 +120,7 @@ namespace Chipper.Physics.Editor
             EditorGUI.BeginChangeCheck();
             collider.Height = EditorGUILayout.FloatField("Height:", collider.Height);
             collider.Radius = EditorGUILayout.FloatField("Radius:", collider.Radius);
+            collider.PivotOffset = EditorGUILayout.Vector3Field("Pivot", collider.PivotOffset);
             if (EditorGUI.EndChangeCheck())
             {
                 collider.Height = math.max(0, collider.Height);

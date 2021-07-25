@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Chipper.Physics
 {
-    [RequiresEntityConversion, DisallowMultipleComponent]
+    [DisallowMultipleComponent]
     [AddComponentMenu("Chipper/Physics/Physics Debug Settings")]
     public class PhysicsDebugSettingAuthoring : MonoBehaviour, IConvertGameObjectToEntity
     {
@@ -12,6 +12,9 @@ namespace Chipper.Physics
         public bool DrawBounds     = true;
         public bool DrawNormals    = true;
         public bool DrawInfoLabels = true;
+
+        public Vector2 LabelOffset = new Vector2(0, 10);
+        public float LabelGap = 5;
 
         Entity m_ConvertedEntity = Entity.Null;
 
@@ -24,6 +27,8 @@ namespace Chipper.Physics
                 DrawBounds  = DrawBounds,
                 DrawNormals = DrawNormals,
                 DrawInfoLabels = DrawInfoLabels,
+                LabelOffset    = LabelOffset,
+                LabelGap       = LabelGap,
             };
             dstManager.AddComponentData(entity, settings);
             m_ConvertedEntity = entity;
@@ -42,6 +47,8 @@ namespace Chipper.Physics
                 component.DrawNormals = DrawNormals;
                 component.DrawInfoLabels = DrawInfoLabels;
                 component.DrawGrid = DrawGrid;
+                component.LabelOffset = LabelOffset;
+                component.LabelGap = LabelGap;
 
                 entityManager.SetComponentData(m_ConvertedEntity, component);
             }

@@ -96,7 +96,7 @@ namespace Chipper.Physics
 
                         colliders[i] = new CircleCollider
                         {
-                            Center = pivot.xy,
+                            Center = pivot.xy + info.Offset,
                             Radius = info.Radius,
                             RadiusSq = info.Radius * info.Radius,
                         };

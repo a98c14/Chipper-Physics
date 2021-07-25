@@ -3,7 +3,7 @@ using Unity.Entities;
 
 namespace Chipper.Physics
 {
-    [RequiresEntityConversion, DisallowMultipleComponent]
+    [DisallowMultipleComponent]
     [AddComponentMenu("Chipper/Physics/Physics Body Authoring")]
     public class PhysicsBodyAuthoring : MonoBehaviour, IConvertGameObjectToEntity
     {
@@ -17,9 +17,9 @@ namespace Chipper.Physics
                 Value = Mass,
             });
 
-            dstManager.AddComponentData(entity, new Force());
-            dstManager.AddComponentData(entity, new Velocity());
-            dstManager.AddComponentData(entity, new Acceleration());
+            dstManager.AddComponentData(entity, Force.Zero);
+            dstManager.AddComponentData(entity, Velocity.Zero);
+            dstManager.AddComponentData(entity, Acceleration.Zero);
 
             if (IsAffectedByGravity)
                 dstManager.AddComponentData(entity, new AffectedByGravity());

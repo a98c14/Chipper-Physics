@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace Chipper.Physics
 {
-    [RequiresEntityConversion, DisallowMultipleComponent]
+    [DisallowMultipleComponent]
     [AddComponentMenu("Chipper/Physics/Collider Authoring")]
     public class ColliderAuthoring : MonoBehaviour, IConvertGameObjectToEntity
     {
@@ -65,8 +65,10 @@ namespace Chipper.Physics
 
         void AddCircleCollider(Entity entity, EntityManager dstManager)
         {
+            
             dstManager.AddComponentData(entity, new CurvedColliderInfo
             {
+                Offset = new float2(transform.localPosition.x, transform.localPosition.y),
                 Height = Height,
                 Angle = Angle,
                 Radius = Radius,
