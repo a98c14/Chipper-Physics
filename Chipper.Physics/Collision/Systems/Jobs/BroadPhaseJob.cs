@@ -6,8 +6,8 @@ namespace Chipper.Physics
     [BurstCompile]
     struct BroadPhaseJob : IJobNativeMultiHashMapVisitKeyValue<int, ColliderData>
     {
-        [ReadOnly] public NativeMultiHashMap<int, ColliderData> TargetMap;
-        [WriteOnly] public NativeMultiHashMap<int, PossibleCollision>.ParallelWriter PossibleCollisions;
+        [ReadOnly] public NativeParallelMultiHashMap<int, ColliderData> TargetMap;
+        [WriteOnly] public NativeParallelMultiHashMap<int, PossibleCollision>.ParallelWriter PossibleCollisions;
 
         public void ExecuteNext(int key, ColliderData source)
         {

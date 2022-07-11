@@ -7,14 +7,14 @@ namespace Chipper.Physics
 {
     [UpdateAfter(typeof(VelocitySystem))]
     [UpdateInGroup(typeof(PhysicsSystemGroup))]
-    public class FrictionSystem : JobComponentSystem
+    public partial class FrictionSystem : SystemBase
     {
-        protected override JobHandle OnUpdate(JobHandle inputDeps)
+        protected override void OnUpdate()
         {
             var settings = HasSingleton<PhysicsSettings>() ? GetSingleton<PhysicsSettings>() : PhysicsSettings.Default;
             var dt = Time.DeltaTime;
 
-            inputDeps = Entities.WithName("FrictionSystem")
+            Entities.WithName("FrictionSystem")
             .ForEach((ref Force force, ref Velocity velocity, ref Acceleration acceleration, in Mass mass) =>
             {
                 //var frictionDirection = math.normalizesafe(velocity.Value) * -1;
@@ -22,9 +22,7 @@ namespace Chipper.Physics
                 acceleration.Value = math.lerp(acceleration.Value, 0, dt * 16f);
                 velocity.Value = math.lerp(velocity.Value, 0, dt * 6f);
             })
-            .Schedule(inputDeps);
-
-            return inputDeps;
+            .Schedule();
         }
     }
 }

@@ -30,7 +30,7 @@ namespace Chipper.Physics
             where TKey : struct, IEquatable<TKey>
             where TValue : struct
         {
-            [ReadOnly] public NativeMultiHashMap<TKey, TValue> HashMap;
+            [ReadOnly] public NativeParallelMultiHashMap<TKey, TValue> HashMap;
             internal TJob JobData;
 
             static IntPtr s_JobReflectionData;
@@ -87,7 +87,7 @@ namespace Chipper.Physics
             }
         }
 
-        public static unsafe JobHandle Schedule<TJob, TKey, TValue>(this TJob jobData, NativeMultiHashMap<TKey, TValue> hashMap, int minIndicesPerJobCount, JobHandle dependsOn = new JobHandle())
+        public static unsafe JobHandle Schedule<TJob, TKey, TValue>(this TJob jobData, NativeParallelMultiHashMap<TKey, TValue> hashMap, int minIndicesPerJobCount, JobHandle dependsOn = new JobHandle())
             where TJob : struct, IJobNativeMultiHashMapVisitKeyValue<TKey, TValue>
             where TKey : struct, IEquatable<TKey>
             where TValue : struct
@@ -129,7 +129,7 @@ namespace Chipper.Physics
             where TValue : struct
         {
             [NativeDisableContainerSafetyRestriction]
-            internal NativeMultiHashMap<TKey, TValue> HashMap;
+            internal NativeParallelMultiHashMap<TKey, TValue> HashMap;
             internal TJob JobData;
 
             static IntPtr s_JobReflectionData;
@@ -185,7 +185,7 @@ namespace Chipper.Physics
             }
         }
 
-        public static unsafe JobHandle Schedule<TJob, TKey, TValue>(this TJob jobData, NativeMultiHashMap<TKey, TValue> hashMap, int minIndicesPerJobCount, JobHandle dependsOn = new JobHandle())
+        public static unsafe JobHandle Schedule<TJob, TKey, TValue>(this TJob jobData, NativeParallelMultiHashMap<TKey, TValue> hashMap, int minIndicesPerJobCount, JobHandle dependsOn = new JobHandle())
             where TJob : struct, IJobNativeMultiHashMapVisitKeyMutableValue<TKey, TValue>
             where TKey : struct, IEquatable<TKey>
             where TValue : struct

@@ -7,10 +7,10 @@ namespace Chipper.Physics
 {
     [UpdateAfter(typeof(ColliderTranslationSystem))]
     [UpdateInGroup(typeof(PhysicsSystemGroup))]
-    public class BoundsCalculationSystem : JobComponentSystem
+    public partial class BoundsCalculationSystem : SystemBase
     {
         [BurstCompile]
-        struct BoundsJob : IJobChunk
+        partial struct BoundsJob : IJobChunk
         {
             [ReadOnly] public ComponentTypeHandle<CircleCollider> CircleColliderType;
             [ReadOnly] public BufferTypeHandle<ColliderVertex> VertexType;
@@ -39,14 +39,14 @@ namespace Chipper.Physics
 
         EntityQuery m_Query;
 
-        protected override JobHandle OnUpdate(JobHandle inputDeps)
+        protected override void OnUpdate()
         {
-            return new BoundsJob
+            new BoundsJob
             {
                 CircleColliderType = GetComponentTypeHandle<CircleCollider>(true),
                 VertexType = GetBufferTypeHandle<ColliderVertex>(true),
                 BoundsType = GetComponentTypeHandle<Bounds2D>(false),
-            }.Schedule(m_Query, inputDeps);
+            }.Schedule(m_Query);
         }
 
         protected override void OnCreate()

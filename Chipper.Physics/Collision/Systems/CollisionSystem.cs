@@ -9,18 +9,18 @@ namespace Chipper.Physics
     [AlwaysUpdateSystem]
     [UpdateAfter(typeof(SpatialPartitionSystem))]
     [UpdateInGroup(typeof(PhysicsSystemGroup))]
-    public class CollisionSystem : JobComponentSystem
+    public partial class CollisionSystem : SystemBase
     {
         public JobHandle CollisionJobHandle;
 
         bool                      m_MapSwitch;
-        NativeHashMap<long, byte> m_FrameCollisions0;
-        NativeHashMap<long, byte> m_FrameCollisions1;
+        NativeParallelHashMap<long, byte> m_FrameCollisions0;
+        NativeParallelHashMap<long, byte> m_FrameCollisions1;
         NativeArray<float2>       m_CellOffsets;
         SpatialPartitionSystem    m_PartitionSystem;
-        NativeMultiHashMap<int, PossibleCollision> m_PossibleCollisions;
+        NativeParallelMultiHashMap<int, PossibleCollision> m_PossibleCollisions;
 
-        protected override JobHandle OnUpdate(JobHandle inputDeps)
+        protected override void OnUpdate()
         {
             // Every frame we switch the previous frame's currentCollisions to this frame's
             // previous collisions. Then we clear the previous frame's previousCollisions and
@@ -35,13 +35,13 @@ namespace Chipper.Physics
             // combine the dependencies between them to ensure public native collection is ready
             // UpdateAfter attribute only handles the IComponentData dependencies and not public native
             // collections.
-            inputDeps = JobHandle.CombineDependencies(inputDeps, m_PartitionSystem.PartitionJobHandle);
+            var partitionHandle = JobHandle.CombineDependencies(Dependency, m_PartitionSystem.PartitionJobHandle);
             
             var broadPhase = new BroadPhaseJob
             {
                 PossibleCollisions = m_PossibleCollisions.AsParallelWriter(),
                 TargetMap = m_PartitionSystem.TargetMap,
-            }.Schedule(m_PartitionSystem.ColliderMap, 1, inputDeps);
+            }.Schedule(m_PartitionSystem.ColliderMap, 1, partitionHandle);
 
             var narrowPhase = new NarrowPhaseJob
             {
@@ -55,15 +55,14 @@ namespace Chipper.Physics
             }.Schedule(m_PossibleCollisions, 1, broadPhase);
 
             CollisionJobHandle = narrowPhase;
-            return narrowPhase;
         }
     
         protected override void OnCreate()
         {            
             m_MapSwitch = false;
-            m_PossibleCollisions = new NativeMultiHashMap<int, PossibleCollision>(100, Allocator.Persistent);
-            m_FrameCollisions0 = new NativeHashMap<long, byte>(1000, Allocator.Persistent);
-            m_FrameCollisions1 = new NativeHashMap<long, byte>(1000, Allocator.Persistent);
+            m_PossibleCollisions = new NativeParallelMultiHashMap<int, PossibleCollision>(100, Allocator.Persistent);
+            m_FrameCollisions0 = new NativeParallelHashMap<long, byte>(1000, Allocator.Persistent);
+            m_FrameCollisions1 = new NativeParallelHashMap<long, byte>(1000, Allocator.Persistent);
             m_PartitionSystem = World.GetOrCreateSystem<SpatialPartitionSystem>();
         }
 

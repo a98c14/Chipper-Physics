@@ -17,8 +17,8 @@ namespace Chipper.Physics
         [ReadOnly] public ComponentTypeHandle<Parent2D> ParentType;
 
         // Every collider in Source map checks collisions against Target map
-        [WriteOnly] public NativeMultiHashMap<int, ColliderData>.ParallelWriter ColliderSourceMap;
-        [WriteOnly] public NativeMultiHashMap<int, ColliderData>.ParallelWriter ColliderTargetMap;
+        [WriteOnly] public NativeParallelMultiHashMap<int, ColliderData>.ParallelWriter ColliderSourceMap;
+        [WriteOnly] public NativeParallelMultiHashMap<int, ColliderData>.ParallelWriter ColliderTargetMap;
 
         [WriteOnly] public NativeQueue<LargeColliderData>.ParallelWriter LargeColliders;
 

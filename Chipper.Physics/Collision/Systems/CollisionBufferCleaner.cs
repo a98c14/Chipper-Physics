@@ -6,13 +6,13 @@ namespace Chipper.Physics
 {
     [UpdateBefore(typeof(SpatialPartitionSystem))]
     [UpdateInGroup(typeof(PhysicsSystemGroup))]
-    public class CollisionBufferCleaner : JobComponentSystem
+    public partial class CollisionBufferCleaner : SystemBase
     {
-        protected override JobHandle OnUpdate(JobHandle inputDeps)
+        protected override void OnUpdate()
         {
-            return Entities.WithName("CollisionBufferCleaner")
+            Entities.WithName("CollisionBufferCleaner")
                 .ForEach((DynamicBuffer<CollisionBuffer> buffer) => buffer.Clear())
-                .Schedule(inputDeps);
+                .Schedule();
         }
     }
 }

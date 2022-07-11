@@ -9,10 +9,10 @@ namespace Chipper.Physics
 {
     [UpdateAfter(typeof(CollisionSystem))]
     [UpdateInGroup(typeof(PhysicsSystemGroup))]
-    public class CollisionResolutionSystem : JobComponentSystem
+    public partial class CollisionResolutionSystem : SystemBase
     {
         [BurstCompile]
-        struct TranslationJob : IJobChunk
+        partial struct TranslationJob : IJobChunk
         {
             [ReadOnly] public ComponentTypeHandle<MoveOutOfCollision> MoveOutOfCollisionType;
             [ReadOnly] public ComponentTypeHandle<ForceOutOfCollision> ForceOutOfCollisionType;
@@ -87,16 +87,16 @@ namespace Chipper.Physics
             });
         }
 
-        protected override JobHandle OnUpdate(JobHandle inputDeps)
+        protected override void OnUpdate()
         {
-            return new TranslationJob
+            new TranslationJob
             {                                
                 CollisionBufferType = GetBufferTypeHandle<CollisionBuffer>(true),
                 ForceOutOfCollisionType = GetComponentTypeHandle<ForceOutOfCollision>(true),
                 MoveOutOfCollisionType = GetComponentTypeHandle<MoveOutOfCollision>(true),
                 PositionType = GetComponentTypeHandle<Position2D>(false),
                 ForceType = GetComponentTypeHandle<Force>(false),
-            }.Schedule(m_Query, inputDeps);
+            }.Schedule(m_Query);
         }
 
     }

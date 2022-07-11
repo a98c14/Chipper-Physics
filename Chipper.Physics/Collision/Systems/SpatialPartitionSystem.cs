@@ -29,23 +29,23 @@ namespace Chipper.Physics
     [AlwaysUpdateSystem]
     [UpdateAfter(typeof(BoundsCalculationSystem))]
     [UpdateInGroup(typeof(PhysicsSystemGroup))]
-    public class SpatialPartitionSystem : JobComponentSystem
+    public partial class SpatialPartitionSystem : SystemBase
     {
-        public NativeMultiHashMap<int, ColliderData> ColliderMap;
-        public NativeMultiHashMap<int, ColliderData> TargetMap;
+        public NativeParallelMultiHashMap<int, ColliderData> ColliderMap;
+        public NativeParallelMultiHashMap<int, ColliderData> TargetMap;
 
         public NativeQueue<LargeColliderData> LargeColliders;
         public JobHandle PartitionJobHandle;
     
         EntityQuery m_ColliderGroup;
 
-        protected override JobHandle OnUpdate(JobHandle inputDeps)
+        protected override void OnUpdate()
         {
             ClearMapsIfCreated();
 
             if (!m_ColliderGroup.IsEmptyIgnoreFilter)
             {
-                inputDeps = new PartitionJob
+                new PartitionJob
                 {
                     EntityType        = GetEntityTypeHandle(),
                     BoundsType        = GetComponentTypeHandle<Bounds2D>(true),
@@ -56,12 +56,11 @@ namespace Chipper.Physics
                     ColliderTargetMap = TargetMap.AsParallelWriter(),
                     ColliderSourceMap = ColliderMap.AsParallelWriter(),
                     LargeColliders    = LargeColliders.AsParallelWriter(),                
-                }.Schedule(m_ColliderGroup, inputDeps);
+                }.Schedule(m_ColliderGroup);
             }
 
             // Save the final handle for other systems to use
-            PartitionJobHandle = inputDeps;
-            return PartitionJobHandle;
+            PartitionJobHandle = Dependency;
         }
 
         protected override void OnCreate()
@@ -88,8 +87,8 @@ namespace Chipper.Physics
 
         void AllocateMaps(int capacity)
         {
-            ColliderMap    = new NativeMultiHashMap<int, ColliderData>(capacity, Allocator.Persistent);
-            TargetMap      = new NativeMultiHashMap<int, ColliderData>(capacity * 10, Allocator.Persistent);
+            ColliderMap    = new NativeParallelMultiHashMap<int, ColliderData>(capacity, Allocator.Persistent);
+            TargetMap      = new NativeParallelMultiHashMap<int, ColliderData>(capacity * 10, Allocator.Persistent);
             LargeColliders = new NativeQueue<LargeColliderData>(Allocator.Persistent);
         }
 

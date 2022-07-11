@@ -7,7 +7,7 @@ using System.Data;
 
 namespace Chipper.Physics
 {
-    public class AccelerationSystem : SystemBase
+    public partial class AccelerationSystem : SystemBase
     {
         protected override void OnUpdate()
         {

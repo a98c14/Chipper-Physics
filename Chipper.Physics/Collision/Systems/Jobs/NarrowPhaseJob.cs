@@ -8,11 +8,11 @@ namespace Chipper.Physics
     [BurstCompile]
     struct NarrowPhaseJob : IJobNativeMultiHashMapVisitKeyValue<int, PossibleCollision>
     {
-        [ReadOnly] public NativeHashMap<long, byte> PreviousFrameCollisions;
+        [ReadOnly] public NativeParallelHashMap<long, byte> PreviousFrameCollisions;
 
         [NativeDisableParallelForRestriction]
         [WriteOnly] public BufferFromEntity<CollisionBuffer> CollisionBufferFromEntity;
-        [WriteOnly] public NativeHashMap<long, byte>.ParallelWriter CurrentFrameCollisions;
+        [WriteOnly] public NativeParallelHashMap<long, byte>.ParallelWriter CurrentFrameCollisions;
 
         // Component Accessors
         [ReadOnly] public BufferFromEntity<ColliderVertex> ColliderVertexFromEntity;

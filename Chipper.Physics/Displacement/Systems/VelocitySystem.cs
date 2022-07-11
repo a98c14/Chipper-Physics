@@ -8,7 +8,7 @@ namespace Chipper.Physics
 {
     [UpdateAfter(typeof(ForceSystem))]
     [UpdateInGroup(typeof(PhysicsSystemGroup))]
-    public class VelocitySystem : SystemBase
+    public partial class VelocitySystem : SystemBase
     {
         protected override void OnUpdate()
         {

@@ -8,19 +8,19 @@ using Chipper.Transforms;
 namespace Chipper.Physics
 {
     [UpdateInGroup(typeof(PhysicsSystemGroup))]
-    public class ColliderTranslationSystem : JobComponentSystem
+    public partial class ColliderTranslationSystem : SystemBase
     {
         [BurstCompile]
-        struct PivotTranslationJob : IJobForEach<Position2D, PivotOffset, Pivot>
+        partial struct PivotTranslationJob : IJobEntity
         {
-            public void Execute([ReadOnly] ref Position2D position, [ReadOnly] ref PivotOffset offset, ref Pivot pivot)
+            public void Execute(in Position2D position, in PivotOffset offset, ref Pivot pivot)
             {
                 pivot.Value = position.Value + offset.Value;
             }
         }
 
         [BurstCompile]
-        struct TranslationJob : IJobChunk
+        partial struct TranslationJob : IJobChunk
         {
             [ReadOnly] public uint LastSystemVersion;
             [ReadOnly] public ComponentTypeHandle<Pivot> PivotType;
@@ -109,10 +109,12 @@ namespace Chipper.Physics
         EntityQuery m_ColliderGroup;
         EntityQuery m_PivotGroup;
 
-        protected override JobHandle OnUpdate(JobHandle inputDeps)
+        protected override void OnUpdate()
         {
-            var pivotJob = new PivotTranslationJob().Schedule(m_PivotGroup, inputDeps);
-            return new TranslationJob
+            var pivotJob = new PivotTranslationJob()
+                .ScheduleParallel(m_PivotGroup);
+
+            new TranslationJob
             {
                 LastSystemVersion = LastSystemVersion,
                 VertexType = GetBufferTypeHandle<ColliderVertex>(false),

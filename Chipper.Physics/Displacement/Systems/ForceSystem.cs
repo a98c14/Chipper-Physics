@@ -6,7 +6,7 @@ namespace Chipper.Physics
 {
     [UpdateAfter(typeof(CollisionResolutionSystem))]
     [UpdateInGroup(typeof(PhysicsSystemGroup))]
-    public class ForceSystem : SystemBase
+    public partial class ForceSystem : SystemBase
     {
         protected override void OnUpdate() 
         {
