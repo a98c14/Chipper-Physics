@@ -22,6 +22,7 @@ namespace Chipper.Physics
 
         protected override void OnUpdate()
         {
+            
             // Every frame we switch the previous frame's currentCollisions to this frame's
             // previous collisions. Then we clear the previous frame's previousCollisions and
             // make it this frame's fresh currentCollisions table.
@@ -36,7 +37,6 @@ namespace Chipper.Physics
             // UpdateAfter attribute only handles the IComponentData dependencies and not public native
             // collections.
             var partitionHandle = JobHandle.CombineDependencies(Dependency, m_PartitionSystem.PartitionJobHandle);
-            
             var broadPhase = new BroadPhaseJob
             {
                 PossibleCollisions = m_PossibleCollisions.AsParallelWriter(),
@@ -64,6 +64,7 @@ namespace Chipper.Physics
             m_FrameCollisions0 = new NativeParallelHashMap<long, byte>(1000, Allocator.Persistent);
             m_FrameCollisions1 = new NativeParallelHashMap<long, byte>(1000, Allocator.Persistent);
             m_PartitionSystem = World.GetOrCreateSystem<SpatialPartitionSystem>();
+            Enabled = false;
         }
 
         protected override void OnDestroy()

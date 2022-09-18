@@ -37,10 +37,12 @@ namespace Chipper.Physics
         public NativeQueue<LargeColliderData> LargeColliders;
         public JobHandle PartitionJobHandle;
     
+        CollisionSystem m_CollisionSystem;
         EntityQuery m_ColliderGroup;
 
         protected override void OnUpdate()
         {
+            m_CollisionSystem.CollisionJobHandle.Complete();
             ClearMapsIfCreated();
 
             if (!m_ColliderGroup.IsEmptyIgnoreFilter)
@@ -61,6 +63,7 @@ namespace Chipper.Physics
 
             // Save the final handle for other systems to use
             PartitionJobHandle = Dependency;
+
         }
 
         protected override void OnCreate()
@@ -75,13 +78,14 @@ namespace Chipper.Physics
                     ComponentType.ReadOnly(typeof(ColliderTag)),
                 },
             });
+            m_CollisionSystem = World.GetOrCreateSystem<CollisionSystem>();
         }
 
         protected override void OnStopRunning()
         {
             PartitionJobHandle.Complete();
             DisposeMapsIfCreated();
-        }
+        } 
 
         bool HasCreatedMaps => ColliderMap.IsCreated || TargetMap.IsCreated || LargeColliders.IsCreated;
 
